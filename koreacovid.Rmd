@@ -1,7 +1,7 @@
 ---
 title: "Initial Korean covid 19"
-author: "your name here"
-date: "todays date"
+author: "Aylin Torres"
+date: "11/12/24"
 output:
   html_document: default
   pdf_document: default
@@ -21,6 +21,23 @@ mutate(across(where(is.character), as.factor))
 ### Data is from the Patient_Info dataset from South Korea 1 Jan to 1 May 2020
 ### This data was retrieved from a downloadable zip file from kaggle
 
+some of the data was uncoded for sex-sex must be just male or female 77 of the data enteries were coded sex as blank, so we omit these. state of a patient must be died or alive-we adjust that as well    
+
+
+# METHODS
+
+$h_0$ : There is no difference in dying depending on sex.
+
+$h_0$ : There is a difference is dying depending on sex.
+
+The Data is from korea in 2022.
+
+result~sex 
+this is catagorical ~ catagorical 
+we will use helper file CAT_CAT
+
+
+
 Some of the data was uncoded for sex - sex must be just male or female
 77 of the data entries were coded sex  as blank, so we omit these.
 state of a patient must be died or alive - we adjust that as well   
@@ -36,20 +53,55 @@ state of a patient must be died or alive - we adjust that as well
 
 
 
-  
+```{r}
+barchartGC(~result + Sex,data=kRdata)
+barchartGC(~result + Sex,data=kRdata, type= "percent")
+```
 
-
-
-
+  The bar chart shows more males died than women.
 
   
 ## Numerical results
 
+```{r}
+table1 <- xtabs(~result + Sex, data=kRdata)
+rowPerc(table1)
+colPerc(table1)
+```
+ among the people who died there were 64% of men who died and 36% of women who died.
+
 
 ## Inferential results 
 
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
 
-
+The P-value of Chi-squared test is 0.001 and the fisheer exact test has p-value of .00009. The odd of the fisher test also taste that men are 2.3 more acceptable of dying from covid 19 therefore the p-value are lower than 0.05 we reject the null hypothesis.
 
 ## Conclusions
+
+$H_0$: there is no difference in dying depending on sex.
+
+$h_0$: there is difference in dying depending on sex.
+
+The data is from korea in 2022.
+
+result~sex
+this is catagorical ~ catagorical
+we will use helper fil CAT_CAT
+
+
+the bar chart shows more males died than women.
+
+Among the people who died there were 64% of men who died and 36% of women who died.
+
+The P-value of Chi-squared test is 0.001 and the fisher exact test has a p-value of .00009. The odd of the fisher test also taste that men  are 2.3 more acceptable of dying from covid19 therefore the p-value are lower than 0.05 we reject the null hypothesis.
+
+
+
+
+
 
